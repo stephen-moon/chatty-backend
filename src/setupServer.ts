@@ -70,10 +70,11 @@ export class ChattyServer {
       res.status(HTTP_STATUS.NOT_FOUND).json({ message: `${req.originalUrl} not found` });
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction): any => {
       log.error(error);
       if (error instanceof CustomError) {
-        return res.status(error.statusCode).json(error.serializeErrors);
+        return res.status(error.statusCode).json(error.serializeErrors());
       }
       next();
     });
