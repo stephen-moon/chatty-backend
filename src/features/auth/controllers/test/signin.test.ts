@@ -117,7 +117,7 @@ describe('SignIn', () => {
     expect(req.session?.jwt).toBeDefined();
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
-      message: 'User loggedin successfully',
+      message: 'User loggedin successfully.',
       user: mergedAuthAndUserData,
       token: req.session?.jwt
     });
