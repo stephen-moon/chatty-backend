@@ -47,6 +47,6 @@ export class SignIn {
       uId: existingUser!.uId,
       createdAt: existingUser!.createdAt
     } as IUserDocument;
-    res.status(HTTP_STATUS.OK).json({ message: 'User login is successful.', user: userDocument, token: userJwt });
+    res.status(HTTP_STATUS.OK).json({ message: 'User loggedin successfully', user: userDocument, token: userJwt });
   }
 }
