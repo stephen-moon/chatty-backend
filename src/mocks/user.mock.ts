@@ -52,13 +52,13 @@ export const existingUser = {
   profilePicture: 'http://place-hold.it/500x500',
   _id: '60263f14648fed5246e322d9',
   uId: '1621613119252066',
-  username: 'Manny',
-  email: 'manny@me.com',
-  avatarColor: 'red',
-  work: 'KickChat Inc.',
-  school: 'University of Benin',
-  location: 'Dusseldorf, Germany',
-  quote: 'Sky is my limit',
+  username: 'Testuser',
+  email: 'test@test.ca',
+  avatarColor: 'blue',
+  work: 'Galatic Entertainment.',
+  school: 'Seoul National University',
+  location: 'Burlington, Canada',
+  quote: 'One at a time',
   createdAt: new Date()
 } as unknown as IUserDocument;
 
@@ -119,13 +119,13 @@ export const mergedAuthAndUserData = {
   _id: '60263f14648fed5246e322d8',
   authId: '60263f14648fed5246e322d3',
   uId: '1621613119252066',
-  username: 'Manny',
-  email: 'manny@me.com',
+  username: 'Testuser',
+  email: 'test@test.ca',
   avatarColor: '#9c27b0',
-  work: 'KickChat Inc.',
-  school: 'University of Benin',
-  location: 'Dusseldorf, Germany',
-  quote: 'Sky is my limit',
+  work: 'Galactic Entertainment',
+  school: 'Seoul National University',
+  location: 'Burlington, Canada',
+  quote: 'One at a time',
   createdAt: '2022-08-31T07:42:24.451Z'
 } as unknown as IUserDocument;
 

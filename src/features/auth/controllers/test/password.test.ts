@@ -6,10 +6,10 @@ import { CustomError } from '@global/helpers/error-handler';
 import { emailQueue } from '@services/queues/email.queue';
 import { authService } from '@services/db/auth.service';
 
-const WRONG_EMAIL = 'test@email.com';
-const CORRECT_EMAIL = 'manny@me.com';
+const WRONG_EMAIL = 'manny@me.com';
+const CORRECT_EMAIL = 'test@test.ca';
 const INVALID_EMAIL = 'test';
-const CORRECT_PASSWORD = 'manny';
+const CORRECT_PASSWORD = 'qwerty';
 
 jest.mock('@services/queues/base.queue');
 jest.mock('@services/queues/email.queue');

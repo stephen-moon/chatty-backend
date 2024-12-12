@@ -61,7 +61,7 @@ describe('SignUp', () => {
     });
   });
 
-  it('should throw an error if username lenght is greater than maximu, length', () => {
+  it('should throw an error if username length is greater than maximum length', () => {
     const req: Request = authMockRequest(
       {},
       {

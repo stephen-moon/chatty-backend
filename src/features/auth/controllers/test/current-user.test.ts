@@ -9,8 +9,8 @@ jest.mock('@services/queues/base.queue');
 jest.mock('@services/redis/user.cache');
 jest.mock('@services/db/user.service');
 
-const USERNAME = 'Manny';
-const PASSWORD = 'manny1';
+const USERNAME = 'Testuser';
+const PASSWORD = 'qwerty';
 
 describe('CurrentUser', () => {
   beforeEach(() => {

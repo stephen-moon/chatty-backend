@@ -49,8 +49,8 @@ export interface IAuthMock {
 export const authUserPayload: AuthPayload = {
   userId: '60263f14648fed5246e322d9',
   uId: '1621613119252066',
-  username: 'Manny',
-  email: 'manny@me.com',
+  username: 'Testuser',
+  email: 'test@test.ca',
   avatarColor: '#9c27b0',
   iat: 12345
 };
@@ -58,8 +58,8 @@ export const authUserPayload: AuthPayload = {
 export const authMock = {
   _id: '60263f14648fed5246e322d3',
   uId: '1621613119252066',
-  username: 'Manny',
-  email: 'manny@me.com',
+  username: 'Testuser',
+  email: 'test@test.ca',
   avatarColor: '#9c27b0',
   createdAt: '2022-08-31T07:42:24.451Z',
   save: () => {},
