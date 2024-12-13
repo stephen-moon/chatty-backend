@@ -1,6 +1,6 @@
 import { authRoutes } from '@auth/routes/authRoutes';
 import { currentUserRoute } from '@auth/routes/currentRoutes';
-import { postRoute } from '@auth/routes/postRoutes';
+import { postRoute } from '@post/routes/postRoutes';
 import { authMiddleware } from '@global/helpers/auth-middleware';
 import { serverAdapter } from '@services/queues/base.queue';
 import { Application } from 'express';

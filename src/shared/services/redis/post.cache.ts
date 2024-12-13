@@ -43,7 +43,7 @@ export class PostCache extends BaseCache {
       `${email}`,
       'avatarColor',
       `${avatarColor}`,
-      'prifilePicture',
+      'profilePicture',
       `${profilePicture}`,
       'post',
       `${post}`,

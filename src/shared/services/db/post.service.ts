@@ -6,6 +6,7 @@ import { UpdateQuery } from 'mongoose';
 
 class PostService {
   public async addPostToDB(userId: string, createdPost: IPostDocument): Promise<void> {
+    console.log(`Added post for user: ${userId}`);
     const post: Promise<IPostDocument> = PostModel.create(createdPost);
     const user: UpdateQuery<IUserDocument> = UserModel.updateOne({ _id: userId }, { $inc: { postsCount: 1 } });
     await Promise.all([post, user]);
