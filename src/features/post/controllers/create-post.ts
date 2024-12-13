@@ -6,6 +6,7 @@ import HTTP_STATUS from 'http-status-codes';
 import { IPostDocument } from '@post/interfaces/post.interface';
 import { PostCache } from '@services/redis/post.cache';
 import { socketIOPostObject } from '@sockets/post';
+import { postQueue } from '@services/queues/post.queue';
 
 const postCache: PostCache = new PostCache();
 
@@ -42,6 +43,8 @@ export class Create {
       uId: `${req.currentUser!.uId}`,
       createdPost
     });
+
+    postQueue.addPostJob('addPostToDB', { key: req.currentUser!.userId, value: createdPost });
 
     res.status(HTTP_STATUS.CREATED).json({ message: 'Post created successfully' });
   }
