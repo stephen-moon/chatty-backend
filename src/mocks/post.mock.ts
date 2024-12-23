@@ -23,7 +23,7 @@ interface IParams {
 }
 
 interface IBody {
-  bgColor: string;
+  bgColor?: string;
   post?: string;
   gifUrl?: string;
   image?: string;
