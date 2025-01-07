@@ -16,4 +16,4 @@ class CurrentUserRoutes {
   }
 }
 
-export const currentUserRoute: CurrentUserRoutes = new CurrentUserRoutes();
+export const currentUserRoutes: CurrentUserRoutes = new CurrentUserRoutes();

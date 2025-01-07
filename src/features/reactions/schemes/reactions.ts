@@ -12,7 +12,7 @@ const addReactionSchema: ObjectSchema = Joi.object().keys({
   }),
   profilePicture: Joi.string().optional().allow(null, ''),
   previousReaction: Joi.string().optional().allow(null, ''),
-  postReactions: Joi.string().optional().allow(null, '')
+  postReactions: Joi.object().optional().allow(null, '')
 });
 
 const removeReactionSchema: ObjectSchema = Joi.object().keys({

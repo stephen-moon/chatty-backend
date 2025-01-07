@@ -28,4 +28,4 @@ class PostRoutes {
   }
 }
 
-export const postRoute: PostRoutes = new PostRoutes();
+export const postRoutes: PostRoutes = new PostRoutes();
