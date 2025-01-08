@@ -32,8 +32,7 @@ export class ReactionCache extends BaseCache {
 
       if (type) {
         await this.client.LPUSH(`reactions: ${key}`, JSON.stringify(reaction));
-        const dataToSave: string[] = ['reactions', JSON.stringify(postReactions)];
-        await this.client.HSET(`posts: ${key}`, dataToSave);
+        await this.client.HSET(`posts: ${key}`, 'reactions', JSON.stringify(postReactions));
       }
     } catch (error) {
       log.error(error);
@@ -53,8 +52,49 @@ export class ReactionCache extends BaseCache {
       multi.LREM(`reactions: ${key}`, 1, JSON.stringify(userPreviousReaction));
       await multi.exec();
 
-      const dataToSave: string[] = ['reactions', JSON.stringify(postReactions)];
-      await this.client.HSET(`posts: ${key}`, dataToSave);
+      await this.client.HSET(`posts: ${key}`, 'reactions', JSON.stringify(postReactions));
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error.  Try again.');
+    }
+  }
+
+  public async getPostReactionsFromCache(postId: string): Promise<[IReactionDocument[], number]> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+
+      const reactionsCount: number = await this.client.LLEN(`reactions: ${postId}`);
+      const response: string[] = await this.client.LRANGE(`reactions: ${postId}`, 0, -1);
+      const list: IReactionDocument[] = [];
+      for (const item of response) {
+        list.push(Helpers.parseJson(item));
+      }
+
+      return response.length ? [list, reactionsCount] : [[], 0];
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error.  Try again.');
+    }
+  }
+
+  public async getPostSingleReactionByUsernameFromCache(postId: string, username: string): Promise<[IReactionDocument, number] | []> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+
+      const response: string[] = await this.client.LRANGE(`reactions: ${postId}`, 0, -1);
+      const list: IReactionDocument[] = [];
+      for (const item of response) {
+        list.push(Helpers.parseJson(item));
+      }
+      const result: IReactionDocument = find(list, (listItem: IReactionDocument) => {
+        return listItem?.username === username;
+      }) as IReactionDocument;
+
+      return result ? [result, 1] : [];
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error.  Try again.');
