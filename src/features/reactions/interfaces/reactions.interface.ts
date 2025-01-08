@@ -1,8 +1,9 @@
 import { ObjectId } from 'mongodb';
-import { Document } from 'mongoose';
+// import { Document } from 'mongoose';
 
-export interface IReactionDocument extends Document {
-  _id: string | ObjectId;
+export interface IReactionDocument {
+  // extends Document {
+  _id?: string | ObjectId;
   username: string;
   avatarColor: string;
   type: string;
