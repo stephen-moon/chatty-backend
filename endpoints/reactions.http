@@ -1,0 +1,41 @@
+@baseUrl = http://localhost:8000
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/post/reaction
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "userTo": "675cb479b3d7a233653e1998",
+  "postId": "677dab0a119ff253267f178f",
+  "type": "love",
+  "previousReaction": "",
+  "postReactions": {"like": 0,"love": 1,"happy": 0,"sad": 0,"wow": 0,"angry": 0},
+  "profilePicture": "https://res.cloudinary.com/dahchezq8/image/upload/v1732829372/6748e0bc9a08e64969f7c56a"
+}
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/post/reaction/677dab0a119ff253267f178f/wow/{"like": 0,"love": 0,"happy": 0,"sad": 0,"wow": 0,"angry": 0}
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/reactions/677dab0a119ff253267f178f
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/single/reaction/username/677dab0a119ff253267f178f/Stephen
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/reactions/username/Stephen
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
