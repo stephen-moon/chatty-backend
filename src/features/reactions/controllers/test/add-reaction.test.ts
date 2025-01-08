@@ -3,7 +3,7 @@ import { authUserPayload } from '@root/mocks/auth.mock';
 import { reactionMockRequest, reactionMockResponse } from '@root/mocks/reactions.mock';
 import { ReactionCache } from '@services/redis/reaction.cache';
 import { reactionQueue } from '@services/queues/reaction.queue';
-import { Add } from '@reactions/controllers/add-reactions';
+import { Add } from '@reactions/controllers/add-reaction';
 
 jest.useFakeTimers();
 jest.mock('@services/queues/base.queue');
