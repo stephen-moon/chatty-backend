@@ -79,7 +79,7 @@ export class ReactionCache extends BaseCache {
     }
   }
 
-  public async getPostSingleReactionByUsernameFromCache(postId: string, username: string): Promise<[IReactionDocument, number] | []> {
+  public async getSinglePostReactionByUsernameFromCache(postId: string, username: string): Promise<[IReactionDocument, number] | []> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();
