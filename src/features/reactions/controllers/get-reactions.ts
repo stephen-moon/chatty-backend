@@ -36,6 +36,6 @@ export class Get {
     const { username } = req.params;
     const reactions: IReactionDocument[] = await reactionService.getReactionsByUsername(username);
 
-    res.status(HTTP_STATUS.OK).json({ message: 'All reactions by username', reactions });
+    res.status(HTTP_STATUS.OK).json({ message: 'All user reactions by username', reactions });
   }
 }
