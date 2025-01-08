@@ -28,7 +28,7 @@ export interface IReactionJob {
   username: string;
   previousReaction: string;
   userTo?: string;
-  userFrom: string;
+  userFrom?: string;
   type?: string;
   reactionObject?: IReactionDocument;
 }
