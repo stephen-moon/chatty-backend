@@ -25,16 +25,16 @@ export class Get {
       ? cachedCommentsNames
       : await commentService.getPostCommentsNamesFromDB({ postId: new mongoose.Types.ObjectId(postId) }, { createdAt: -1 });
 
-    res.status(HTTP_STATUS.OK).json({ message: 'Post comments names', commentsNames });
+    res.status(HTTP_STATUS.OK).json({ message: 'Post comments names', comments: commentsNames.length ? commentsNames[0] : [] });
   }
 
   public async singleComment(req: Request, res: Response): Promise<void> {
     const { postId, commentId } = req.params;
     const cachedComment: ICommentDocument[] = await commentCache.getSinglePostCommentFromCache(postId, commentId);
-    const comment: ICommentDocument[] = cachedComment.length
+    const comments: ICommentDocument[] = cachedComment.length
       ? cachedComment
       : await commentService.getPostCommentsFromDB({ _id: new mongoose.Types.ObjectId(commentId) }, { createdAt: -1 });
 
-    res.status(HTTP_STATUS.OK).json({ message: 'Single post comment', comment: comment[0] });
+    res.status(HTTP_STATUS.OK).json({ message: 'Single post comment', comments: comments.length ? comments[0] : [] });
   }
 }
