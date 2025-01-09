@@ -1,6 +1,6 @@
 import { ServerError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
-import { IReactionDocument, IReactions } from '@reactions/interfaces/reactions.interface';
+import { IReactionDocument, IReactions } from '@reactions/interfaces/reaction.interface';
 import { config } from '@root/config';
 import { BaseCache } from '@services/redis/base.cache';
 import Logger from 'bunyan';
