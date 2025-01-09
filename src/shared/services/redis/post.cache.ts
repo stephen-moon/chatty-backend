@@ -62,15 +62,15 @@ export class PostCache extends BaseCache {
         await this.client.connect();
       }
 
-      const postsCount: string[] = await this.client.HMGET(`users: ${currentUserId}`, 'postsCount');
+      const postsCount: string[] = await this.client.HMGET(`users:${currentUserId}`, 'postsCount');
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
       multi.ZADD('post', { score: parseInt(uId, 10), value: `${key}` });
       for (const [itemKey, itemValue] of Object.entries(dataToSave)) {
-        multi.HSET(`posts: ${key}`, `${itemKey}`, `${itemValue}`);
+        multi.HSET(`posts:${key}`, `${itemKey}`, `${itemValue}`);
       }
 
       const count: number = parseInt(postsCount[0], 10) + 1;
-      multi.HSET(`users: ${currentUserId}`, 'postsCount', count);
+      multi.HSET(`users:${currentUserId}`, 'postsCount', count);
       multi.exec();
     } catch (error) {
       log.error(error);
@@ -88,7 +88,7 @@ export class PostCache extends BaseCache {
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
 
       for (const value of reply) {
-        multi.HGETALL(`posts: ${value}`);
+        multi.HGETALL(`posts:${value}`);
       }
       const replies: PostCacheMultyType = (await multi.exec()) as PostCacheMultyType;
       const postReplies: IPostDocument[] = [];
@@ -131,7 +131,7 @@ export class PostCache extends BaseCache {
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
 
       for (const value of reply) {
-        multi.HGETALL(`posts: ${value}`);
+        multi.HGETALL(`posts:${value}`);
       }
       const replies: PostCacheMultyType = (await multi.exec()) as PostCacheMultyType;
       const postWithImages: IPostDocument[] = [];
@@ -162,7 +162,7 @@ export class PostCache extends BaseCache {
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
 
       for (const value of reply) {
-        multi.HGETALL(`posts: ${value}`);
+        multi.HGETALL(`posts:${value}`);
       }
       const replies: PostCacheMultyType = (await multi.exec()) as PostCacheMultyType;
       const postReplies: IPostDocument[] = [];
@@ -200,15 +200,15 @@ export class PostCache extends BaseCache {
       if (!this.client.isOpen) {
         await this.client.connect();
       }
-      const postsCount: string[] = await this.client.HMGET(`users: ${currentUserId}`, 'postsCount');
+      const postsCount: string[] = await this.client.HMGET(`users:${currentUserId}`, 'postsCount');
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
       multi.ZREM('post', `${key}`);
-      multi.DEL(`posts: ${key}`);
-      multi.DEL(`comments: ${key}`);
-      multi.DEL(`reactions: ${key}`);
+      multi.DEL(`posts:${key}`);
+      multi.DEL(`comments:${key}`);
+      multi.DEL(`reactions:${key}`);
 
       const count: number = parseInt(postsCount[0], 10) - 1;
-      multi.HSET(`users: ${currentUserId}`, 'postsCount', count);
+      multi.HSET(`users:${currentUserId}`, 'postsCount', count);
       await multi.exec();
     } catch (error) {
       log.error(error);
@@ -236,10 +236,10 @@ export class PostCache extends BaseCache {
       }
 
       for (const [itemKey, itemValue] of Object.entries(dataToSave)) {
-        await this.client.HSET(`posts: ${key}`, itemKey, itemValue);
+        await this.client.HSET(`posts:${key}`, itemKey, itemValue);
       }
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
-      multi.HGETALL(`posts: ${key}`);
+      multi.HGETALL(`posts:${key}`);
       const reply: PostCacheMultyType = (await multi.exec()) as PostCacheMultyType;
       const postReply = reply as IPostDocument[];
       postReply[0].commentsCount = Helpers.parseJson(`${postReply[0].commentsCount}`) as number;
