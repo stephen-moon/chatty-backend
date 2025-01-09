@@ -31,8 +31,8 @@ export class ReactionCache extends BaseCache {
       }
 
       if (type) {
-        await this.client.LPUSH(`reactions: ${key}`, JSON.stringify(reaction));
-        await this.client.HSET(`posts: ${key}`, 'reactions', JSON.stringify(postReactions));
+        await this.client.LPUSH(`reactions:${key}`, JSON.stringify(reaction));
+        await this.client.HSET(`posts:${key}`, 'reactions', JSON.stringify(postReactions));
       }
     } catch (error) {
       log.error(error);
@@ -46,13 +46,13 @@ export class ReactionCache extends BaseCache {
         await this.client.connect();
       }
 
-      const response: string[] = await this.client.LRANGE(`reactions: ${key}`, 0, -1);
+      const response: string[] = await this.client.LRANGE(`reactions:${key}`, 0, -1);
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
       const userPreviousReaction: IReactionDocument = this.getPreviousReacton(response, username) as IReactionDocument;
-      multi.LREM(`reactions: ${key}`, 1, JSON.stringify(userPreviousReaction));
+      multi.LREM(`reactions:${key}`, 1, JSON.stringify(userPreviousReaction));
       await multi.exec();
 
-      await this.client.HSET(`posts: ${key}`, 'reactions', JSON.stringify(postReactions));
+      await this.client.HSET(`posts:${key}`, 'reactions', JSON.stringify(postReactions));
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error.  Try again.');
@@ -65,8 +65,8 @@ export class ReactionCache extends BaseCache {
         await this.client.connect();
       }
 
-      const reactionsCount: number = await this.client.LLEN(`reactions: ${postId}`);
-      const response: string[] = await this.client.LRANGE(`reactions: ${postId}`, 0, -1);
+      const reactionsCount: number = await this.client.LLEN(`reactions:${postId}`);
+      const response: string[] = await this.client.LRANGE(`reactions:${postId}`, 0, -1);
       const list: IReactionDocument[] = [];
       for (const item of response) {
         list.push(Helpers.parseJson(item));
@@ -85,7 +85,7 @@ export class ReactionCache extends BaseCache {
         await this.client.connect();
       }
 
-      const response: string[] = await this.client.LRANGE(`reactions: ${postId}`, 0, -1);
+      const response: string[] = await this.client.LRANGE(`reactions:${postId}`, 0, -1);
       const list: IReactionDocument[] = [];
       for (const item of response) {
         list.push(Helpers.parseJson(item));
