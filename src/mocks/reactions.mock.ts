@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { AuthPayload } from '@auth/interfaces/auth.interface';
-import { IReactionDocument, IReactions } from '@reactions/interfaces/reactions.interface';
+import { IReactionDocument, IReactions } from '@reactions/interfaces/reaction.interface';
 import { IJWT } from './auth.mock';
 
 export const reactionMockRequest = (sessionData: IJWT, body: IBody, currentUser?: AuthPayload | null, params?: IParams) => ({

@@ -1,7 +1,7 @@
 import { Helpers } from '@global/helpers/helpers';
 import { IPostDocument } from '@post/interfaces/post.interface';
 import { PostModel } from '@post/models/post.schema';
-import { IQueryReaction, IReactionDocument, IReactionJob } from '@reactions/interfaces/reactions.interface';
+import { IQueryReaction, IReactionDocument, IReactionJob } from '@reactions/interfaces/reaction.interface';
 import { ReactionModel } from '@reactions/models/reaction.schema';
 import { UserCache } from '@services/redis/user.cache';
 import { IUserDocument } from '@user/interfaces/user.interface';
