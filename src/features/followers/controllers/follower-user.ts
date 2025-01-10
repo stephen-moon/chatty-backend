@@ -7,20 +7,21 @@ import { IUserDocument } from '@user/interfaces/user.interface';
 import { Request, Response } from 'express';
 import HTTP_STATUS from 'http-status-codes';
 import { socketIOFollowerObject } from '@sockets/follower';
+import { followerQueue } from '@services/queues/follower.queue';
 
 const followerCache: FollowerCache = new FollowerCache();
 const userCache: UserCache = new UserCache();
 
 export class Add {
   public async follower(req: Request, res: Response): Promise<void> {
-    const { followerId } = req.params;
+    const { followeeId } = req.params;
 
     // update count in cache
-    const followersCount: Promise<void> = followerCache.updateFollowersCountInCache(`${followerId}`, 'followersCount', 1);
+    const followersCount: Promise<void> = followerCache.updateFollowersCountInCache(`${followeeId}`, 'followersCount', 1);
     const followeesCount: Promise<void> = followerCache.updateFollowersCountInCache(`${req.currentUser!.userId}`, 'followingCount', 1);
     await Promise.all([followersCount, followeesCount]);
 
-    const cachedFollower: Promise<IUserDocument> = userCache.getUserFromCache(followerId) as Promise<IUserDocument>;
+    const cachedFollower: Promise<IUserDocument> = userCache.getUserFromCache(followeeId) as Promise<IUserDocument>;
     const cachedFollowee: Promise<IUserDocument> = userCache.getUserFromCache(`${req.currentUser!.userId}`) as Promise<IUserDocument>;
     const response: [IUserDocument, IUserDocument] = await Promise.all([cachedFollower, cachedFollowee]);
 
@@ -29,11 +30,16 @@ export class Add {
 
     socketIOFollowerObject.emit('add follower', addFolloweeData);
 
-    const addFollowerToCache: Promise<void> = followerCache.saveFollowerToCache(`followers:${req.currentUser!.userId}`, `${followerId}`);
-    const addFolloweeToCache: Promise<void> = followerCache.saveFollowerToCache(`following:${followerId}`, `${req.currentUser!.userId}`);
+    const addFollowerToCache: Promise<void> = followerCache.saveFollowerToCache(`following:${req.currentUser!.userId}`, `${followeeId}`);
+    const addFolloweeToCache: Promise<void> = followerCache.saveFollowerToCache(`followers:${followeeId}`, `${req.currentUser!.userId}`);
     await Promise.all([addFollowerToCache, addFolloweeToCache]);
 
-    // send data to queue
+    followerQueue.addFollowerJob('addFollowerToDB', {
+      keyOne: `${req.currentUser!.userId}`,
+      keyTwo: `${followeeId}`,
+      username: req.currentUser!.username,
+      followerDocumentId: followerObjectId
+    });
 
     res.status(HTTP_STATUS.OK).json({ message: 'Following user now' });
   }
