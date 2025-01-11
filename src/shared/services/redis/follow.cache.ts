@@ -3,15 +3,15 @@ import { config } from '@root/config';
 import { BaseCache } from '@services/redis/base.cache';
 import Logger from 'bunyan';
 
-const cacheName: string = 'followerCache';
+const cacheName: string = 'followCache';
 const log: Logger = config.createLogger(cacheName);
 
-export class FollowerCache extends BaseCache {
+export class FollowCache extends BaseCache {
   constructor() {
     super(cacheName);
   }
 
-  public async saveFollowerToCache(key: string, value: string): Promise<void> {
+  public async saveFollowToCache(key: string, value: string): Promise<void> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();
@@ -24,7 +24,7 @@ export class FollowerCache extends BaseCache {
     }
   }
 
-  public async removeFollowerFromCache(key: string, value: string): Promise<void> {
+  public async removeFollowFromCache(key: string, value: string): Promise<void> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();
@@ -37,7 +37,7 @@ export class FollowerCache extends BaseCache {
     }
   }
 
-  public async updateFollowersCountInCache(userId: string, prop: string, value: number): Promise<void> {
+  public async updateFollowCountInCache(userId: string, prop: string, value: number): Promise<void> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();
