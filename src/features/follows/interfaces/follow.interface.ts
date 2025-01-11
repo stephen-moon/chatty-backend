@@ -2,25 +2,25 @@ import { ObjectId } from 'mongodb';
 import mongoose, { Document } from 'mongoose';
 import { IUserDocument } from '@user/interfaces/user.interface';
 
-export interface IFollowers {
+export interface IFollows {
   userId: string;
 }
 
-export interface IFollowerDocument extends Document {
+export interface IFollowDocument extends Document {
   _id: mongoose.Types.ObjectId | string;
   followerId: mongoose.Types.ObjectId;
   followeeId: mongoose.Types.ObjectId;
   createdAt?: Date;
 }
 
-export interface IFollower {
+export interface IFollow {
   _id: mongoose.Types.ObjectId | string;
-  followeeId?: IFollowerData;
-  followerId?: IFollowerData;
+  followeeId?: IFollowData;
+  followerId?: IFollowData;
   createdAt?: Date;
 }
 
-export interface IFollowerData {
+export interface IFollowData {
   avatarColor: string;
   followersCount: number;
   followingCount: number;
@@ -32,11 +32,11 @@ export interface IFollowerData {
   userProfile?: IUserDocument;
 }
 
-export interface IFollowerJobData {
+export interface IFollowJobData {
   keyOne?: string;
   keyTwo?: string;
   username?: string;
-  followerDocumentId?: ObjectId;
+  followDocumentId?: ObjectId;
 }
 
 export interface IBlockedUserJobData {

@@ -1,17 +1,17 @@
-import { IFollowerDocument } from '@followers/interfaces/follower.interface';
-import { FollowerModel } from '@followers/models/follower.schema';
+import { IFollowDocument } from '@follows/interfaces/follow.interface';
+import { FollowModel } from '@follows/models/follow.schema';
 import { IQueryComplete, IQueryDeleted } from '@post/interfaces/post.interface';
 import { UserModel } from '@user/models/user.schema';
 import { BulkWriteResult, ObjectId } from 'mongodb';
 import mongoose, { Query } from 'mongoose';
 
-class FollowerService {
-  public async addFollowerToDB(userId: string, followeeId: string, username: string, followerDocumentId: ObjectId): Promise<void> {
+class FollowService {
+  public async addFollowToDB(userId: string, followeeId: string, username: string, followDocumentId: ObjectId): Promise<void> {
     const followeeObjectId: ObjectId = new mongoose.Types.ObjectId(followeeId);
     const followerObjectId: ObjectId = new mongoose.Types.ObjectId(userId);
 
-    await FollowerModel.create({
-      _id: followerDocumentId,
+    await FollowModel.create({
+      _id: followDocumentId,
       followeeId: followeeObjectId,
       followerId: followerObjectId
     });
@@ -34,11 +34,11 @@ class FollowerService {
     await Promise.all([users, UserModel.findOne({ _id: followeeId })]);
   }
 
-  public async removeFollowerFromDB(followeeId: string, followerId: string): Promise<void> {
+  public async removeFollowFromDB(followeeId: string, followerId: string): Promise<void> {
     const followeeObjectId: ObjectId = new mongoose.Types.ObjectId(followeeId);
     const followerObjectId: ObjectId = new mongoose.Types.ObjectId(followerId);
 
-    const unfollow: Query<IQueryComplete & IQueryDeleted, IFollowerDocument> = FollowerModel.deleteOne({
+    const unfollow: Query<IQueryComplete & IQueryDeleted, IFollowDocument> = FollowModel.deleteOne({
       followeeId: followeeObjectId,
       followerId: followerObjectId
     });
@@ -62,4 +62,4 @@ class FollowerService {
   }
 }
 
-export const followerService: FollowerService = new FollowerService();
+export const followService: FollowService = new FollowService();

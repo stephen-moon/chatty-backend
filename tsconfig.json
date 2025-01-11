@@ -26,7 +26,7 @@
       "@post/*": ["src/features/post/*"],
       "@reactions/*": ["src/features/reactions/*"],
       "@comments/*": ["src/features/comments/*"],
-      "@followers/*": ["src/features/followers/*"],
+      "@follows/*": ["src/features/follows/*"],
       "@global/*": ["src/shared/globals/*"],
       "@services/*": ["src/shared/services/*"],
       "@sockets/*": ["src/shared/sockets/*"],
