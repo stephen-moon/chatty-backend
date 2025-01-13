@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import HTTP_STATUS from 'http-status-codes';
-import { IReactionJob } from '@reactions/interfaces/reactions.interface';
+import { IReactionJob } from '@reactions/interfaces/reaction.interface';
 import { ReactionCache } from '@services/redis/reaction.cache';
 import { reactionQueue } from '@services/queues/reaction.queue';
 

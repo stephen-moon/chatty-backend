@@ -1,4 +1,4 @@
-import { IReactionDocument } from '@reactions/interfaces/reactions.interface';
+import { IReactionDocument } from '@reactions/interfaces/reaction.interface';
 import mongoose, { model, Model, Schema } from 'mongoose';
 
 const reactionSchema: Schema = new Schema({

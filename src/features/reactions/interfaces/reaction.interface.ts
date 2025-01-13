@@ -1,8 +1,7 @@
 import { ObjectId } from 'mongodb';
-// import { Document } from 'mongoose';
+import { Document } from 'mongoose';
 
-export interface IReactionDocument {
-  // extends Document {
+export interface IReactionDocument extends Partial<Document> {
   _id?: string | ObjectId;
   username: string;
   avatarColor: string;

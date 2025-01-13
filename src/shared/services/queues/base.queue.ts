@@ -7,9 +7,11 @@ import { config } from '@root/config';
 import { IAuthJob } from '@auth/interfaces/auth.interface';
 import { IEmailJob } from '@user/interfaces/user.interface';
 import { IPostJobData } from '@post/interfaces/post.interface';
-import { IReactionJob } from '@reactions/interfaces/reactions.interface';
+import { IReactionJob } from '@reactions/interfaces/reaction.interface';
+import { ICommentJob } from '@comments/interfaces/comment.interface';
+import { IFollowJobData } from '@follows/interfaces/follow.interface';
 
-type IBaseJobData = IAuthJob | IEmailJob | IPostJobData | IReactionJob;
+type IBaseJobData = IAuthJob | IEmailJob | IPostJobData | IReactionJob | ICommentJob | IFollowJobData;
 
 let bullAdapters: BullAdapter[] = [];
 export let serverAdapter: ExpressAdapter;

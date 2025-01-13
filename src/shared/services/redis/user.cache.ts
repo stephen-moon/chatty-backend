@@ -65,7 +65,7 @@ export class UserCache extends BaseCache {
       }
       await this.client.ZADD('user', { score: parseInt(userUId, 10), value: `${key}` });
       for (const [itemKey, itemValue] of Object.entries(dataToSave)) {
-        await this.client.HSET(`users: ${key}`, itemKey, itemValue);
+        await this.client.HSET(`users:${key}`, itemKey, itemValue);
       }
     } catch (error) {
       log.error(error);
@@ -79,7 +79,7 @@ export class UserCache extends BaseCache {
         await this.client.connect();
       }
 
-      const response: IUserDocument = (await this.client.HGETALL(`users: ${key}`)) as unknown as IUserDocument;
+      const response: IUserDocument = (await this.client.HGETALL(`users:${key}`)) as unknown as IUserDocument;
       response.createdAt = new Date(Helpers.parseJson(`${response.createdAt}`));
       response.postsCount = Helpers.parseJson(`${response.postsCount}`);
       response.blocked = Helpers.parseJson(`${response.blocked}`);

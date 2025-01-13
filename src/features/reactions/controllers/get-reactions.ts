@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import HTTP_STATUS from 'http-status-codes';
-import { IReactionDocument } from '@reactions/interfaces/reactions.interface';
+import { IReactionDocument } from '@reactions/interfaces/reaction.interface';
 import { ReactionCache } from '@services/redis/reaction.cache';
 import { reactionService } from '@services/db/reaction.service';
 import mongoose from 'mongoose';

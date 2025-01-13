@@ -32,9 +32,9 @@ class PostService {
   public async deletePost(postId: string, userId: string): Promise<void> {
     const deletePost: Query<IQueryComplete & IQueryDeleted, IPostDocument> = PostModel.deleteOne({ _id: postId });
     // delete reactions here
-    const decrementPostCount: UpdateQuery<IUserDocument> = UserModel.updateOne({ _id: userId }, { $inc: { postsCount: -1 } });
+    const decrementPostsCount: UpdateQuery<IUserDocument> = UserModel.updateOne({ _id: userId }, { $inc: { postsCount: -1 } });
 
-    await Promise.all([deletePost, decrementPostCount]);
+    await Promise.all([deletePost, decrementPostsCount]);
   }
 
   public async editPost(postId: string, updatedPost: IPostDocument): Promise<void> {
