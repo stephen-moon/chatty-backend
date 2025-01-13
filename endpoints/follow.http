@@ -12,3 +12,15 @@ PUT {{baseUrl}}/{{urlPath}}/user/unfollow/678022860765f57335091000
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+GET  {{baseUrl}}/{{urlPath}}/user/following
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET  {{baseUrl}}/{{urlPath}}/user/followers/678022860765f57335091000
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
