@@ -39,7 +39,7 @@ export interface IFollowJobData {
   followDocumentId?: ObjectId;
 }
 
-export interface IBlockedUserJobData {
+export interface IBlockUserJobData {
   keyOne?: string;
   keyTwo?: string;
   type?: string;
