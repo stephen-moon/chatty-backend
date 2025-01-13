@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ICommentDocument, ICommentJob, ICommentNameList, IQueryComment } from '@comments/interfaces/comment.interface';
 import { CommentsModel } from '@comments/models/comment.schema';
 import { IPostDocument } from '@post/interfaces/post.interface';
 import { PostModel } from '@post/models/post.schema';
 import { UserCache } from '@services/redis/user.cache';
 import { IUserDocument } from '@user/interfaces/user.interface';
-import { Query } from 'mongoose';
+import mongoose, { Query } from 'mongoose';
+import { INotificationDocument } from '@notifications/interfaces/notification.interface';
+import { NotificationModel } from '@notifications/models/notification.schema';
+import { socketIONotificationObject } from '@sockets/notification';
 
 const userCache: UserCache = new UserCache();
 
@@ -24,6 +26,28 @@ class CommentService {
     const response: [ICommentDocument, IPostDocument, IUserDocument] = await Promise.all([comments, post, user]);
 
     // send comments notification
+    if (response[2].notifications.comments && userFrom !== userTo) {
+      const notificationModel: INotificationDocument = new NotificationModel();
+      const notification = await notificationModel.insertNotification({
+        userFrom,
+        userTo,
+        message: `${username} commented on your post.`,
+        notificationType: 'comments',
+        entityId: new mongoose.Types.ObjectId(postId),
+        createdItemId: new mongoose.Types.ObjectId(response[0]._id),
+        createdAt: new Date(),
+        comment: comment.comment,
+        post: response[1].post,
+        imgId: response[1].imgId!,
+        imgVersion: response[1].imgVersion!,
+        gifUrl: response[1].gifUrl!,
+        reaction: ''
+      });
+
+      socketIONotificationObject.emit('insert notification', notification, { userTo });
+
+      // send to email queue
+    }
   }
 
   public async getPostCommentsFromDB(query: IQueryComment, sort: Record<string, 1 | -1>): Promise<ICommentDocument[]> {
