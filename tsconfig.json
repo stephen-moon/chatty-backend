@@ -27,6 +27,7 @@
       "@reactions/*": ["src/features/reactions/*"],
       "@comments/*": ["src/features/comments/*"],
       "@follows/*": ["src/features/follows/*"],
+      "@notifications/*": ["src/features/notifications/*"],
       "@global/*": ["src/shared/globals/*"],
       "@services/*": ["src/shared/services/*"],
       "@sockets/*": ["src/shared/sockets/*"],
