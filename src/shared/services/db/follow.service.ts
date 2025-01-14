@@ -5,11 +5,14 @@ import { NotificationModel } from '@notifications/models/notification.schema';
 import { IQueryComplete, IQueryDeleted } from '@post/interfaces/post.interface';
 import { notificationTemplate } from '@services/emails/templates/notifications/notification-template';
 import { emailQueue } from '@services/queues/email.queue';
+import { UserCache } from '@services/redis/user.cache';
 import { socketIONotificationObject } from '@sockets/notification';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { UserModel } from '@user/models/user.schema';
 import { BulkWriteResult, ObjectId } from 'mongodb';
 import mongoose, { Query } from 'mongoose';
+
+const userCache: UserCache = new UserCache();
 
 class FollowService {
   public async addFollowToDB(userId: string, followeeId: string, username: string, followDocumentId: ObjectId): Promise<void> {
@@ -37,7 +40,7 @@ class FollowService {
       }
     ]);
 
-    const response: [BulkWriteResult, IUserDocument | null] = await Promise.all([users, UserModel.findOne({ _id: followeeId })]);
+    const response: [BulkWriteResult, IUserDocument | null] = await Promise.all([users, userCache.getUserFromCache(followeeId)]);
 
     // send comments notification
     if (response[1]?.notifications.follows && userId !== followeeId) {
