@@ -29,6 +29,7 @@ const config: Config.InitialOptions = {
     '@comments/(.*)': ['<rootDir>/src/features/comments/$1'],
     '@follows/(.*)': ['<rootDir>/src/features/follows/$1'],
     '@notifications/(.*)': ['<rootDir>/src/features/notifications/$1'],
+    '@images/(.*)': ['<rootDir>/src/features/images/$1'],
     '@global/(.*)': ['<rootDir>/src/shared/globals/$1'],
     '@services/(.*)': ['<rootDir>/src/shared/services/$1'],
     '@sockets/(.*)': ['<rootDir>/src/shared/sockets/$1'],
