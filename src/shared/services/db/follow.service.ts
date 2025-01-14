@@ -1,6 +1,12 @@
 import { IFollowData, IFollowDocument } from '@follows/interfaces/follow.interface';
 import { FollowModel } from '@follows/models/follow.schema';
+import { INotificationDocument, INotificationTemplate } from '@notifications/interfaces/notification.interface';
+import { NotificationModel } from '@notifications/models/notification.schema';
 import { IQueryComplete, IQueryDeleted } from '@post/interfaces/post.interface';
+import { notificationTemplate } from '@services/emails/templates/notifications/notification-template';
+import { emailQueue } from '@services/queues/email.queue';
+import { socketIONotificationObject } from '@sockets/notification';
+import { IUserDocument } from '@user/interfaces/user.interface';
 import { UserModel } from '@user/models/user.schema';
 import { BulkWriteResult, ObjectId } from 'mongodb';
 import mongoose, { Query } from 'mongoose';
@@ -10,7 +16,7 @@ class FollowService {
     const followeeObjectId: ObjectId = new mongoose.Types.ObjectId(followeeId);
     const followerObjectId: ObjectId = new mongoose.Types.ObjectId(userId);
 
-    await FollowModel.create({
+    const following = await FollowModel.create({
       _id: followDocumentId,
       followeeId: followeeObjectId,
       followerId: followerObjectId
@@ -31,7 +37,41 @@ class FollowService {
       }
     ]);
 
-    await Promise.all([users, UserModel.findOne({ _id: followeeId })]);
+    const response: [BulkWriteResult, IUserDocument | null] = await Promise.all([users, UserModel.findOne({ _id: followeeId })]);
+
+    // send comments notification
+    if (response[1]?.notifications.follows && userId !== followeeId) {
+      const notificationModel: INotificationDocument = new NotificationModel();
+      const notification = await notificationModel.insertNotification({
+        userFrom: userId,
+        userTo: followeeId,
+        message: `${username} is now following you.`,
+        notificationType: 'follows',
+        entityId: new mongoose.Types.ObjectId(userId),
+        createdItemId: new mongoose.Types.ObjectId(following._id),
+        createdAt: new Date(),
+        comment: '',
+        post: '',
+        imgId: '',
+        imgVersion: '',
+        gifUrl: '',
+        reaction: ''
+      });
+
+      socketIONotificationObject.emit('insert notification', notification, { userTo: followeeId });
+
+      const templateParams: INotificationTemplate = {
+        username: response[1].username!,
+        message: `${username} is now following you.`,
+        header: 'Follow Notification'
+      };
+      const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
+      emailQueue.addEmailJob('followsEmail', {
+        receiverEmail: response[1].email!,
+        template,
+        subject: `${username} is now following you.`
+      });
+    }
   }
 
   public async removeFollowFromDB(followeeId: string, followerId: string): Promise<void> {
