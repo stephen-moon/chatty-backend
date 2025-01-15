@@ -207,7 +207,6 @@ describe('SignUp', () => {
     jest.spyOn(cloudinaryUploads, 'uploads').mockImplementation((): any => Promise.resolve({ version: '1234', public_id: '123456' }));
 
     await SignUp.prototype.create(req, res);
-    console.log(userSpy.mock);
     expect(req.session?.jwt).toBeDefined();
     expect(res.json).toHaveBeenCalledWith({
       message: 'User created successfully',
