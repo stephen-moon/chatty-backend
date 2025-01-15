@@ -24,8 +24,13 @@ class ImageService {
     });
   }
 
-  public async removeImageFromDB(imgId: string): Promise<void> {
-    await ImageModel.deleteOne({ _id: imgId }).exec();
+  public async removeBGImageFromDB(userId: string, imgId: string): Promise<void> {
+    await UserModel.updateOne({ _id: userId }, { $set: { bgImageId: '', bgImageVersion: '' } }).exec();
+    await this.removeImageFromDB(imgId);
+  }
+
+  public async removeImageFromDB(imageId: string): Promise<void> {
+    await ImageModel.deleteOne({ _id: imageId }).exec();
   }
 
   public async getImageByBackgroundId(bgImageId: string): Promise<IFileImageDocument> {

@@ -60,8 +60,8 @@ export class Add {
       bgImageVersion: version,
       userId: response[0]
     });
-    imageQueue.addImageJob('updateBGImageToDB', {
-      key: `${req.currentUser!.userId}`,
+    imageQueue.addImageJob('addBGImageToDB', {
+      userId: `${req.currentUser!.userId}`,
       imgId: publicId,
       imgVersion: version.toString()
     });

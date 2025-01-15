@@ -18,5 +18,17 @@ Accept: application/json
 withCredentials: true
 
 {
-  "image": "https://res.cloudinary.com/dahchezq8/image/upload/v1736450639/6780224f0765f57335090ff9"
+  "image": "https://res.cloudinary.com/dahchezq8/image/upload/v1736960255/6787e8fe736566768fa0f275"
 }
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/images/678802f0a7aee9328a1fe762
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/images/background/6787e8fe736566768fa0f275
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
