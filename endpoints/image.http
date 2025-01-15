@@ -2,6 +2,12 @@
 @urlPath = api/v1
 
 ###
+GET  {{baseUrl}}/{{urlPath}}/images/678816acb9559ff2e621e98f
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
 POST {{baseUrl}}/{{urlPath}}/images/profile
 Content-Type: application/json
 Accept: application/json
@@ -18,17 +24,17 @@ Accept: application/json
 withCredentials: true
 
 {
-  "image": "https://res.cloudinary.com/dahchezq8/image/upload/v1736960255/6787e8fe736566768fa0f275"
+  "image": "https://res.cloudinary.com/dahchezq8/image/upload/v1736971949/678816acb9559ff2e621e98f"
 }
 
 ###
-DELETE {{baseUrl}}/{{urlPath}}/images/678802f0a7aee9328a1fe762
+DELETE {{baseUrl}}/{{urlPath}}/images/67881916b9559ff2e621e9a4
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 ###
-DELETE {{baseUrl}}/{{urlPath}}/images/background/6787e8fe736566768fa0f275
+DELETE {{baseUrl}}/{{urlPath}}/images/background/678816acb9559ff2e621e98f
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
