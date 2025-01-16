@@ -15,8 +15,10 @@ import { socketIOChatObject } from '@sockets/chat';
 import { INotificationTemplate } from '@notifications/interfaces/notification.interface';
 import { notificationTemplate } from '@services/emails/templates/notifications/notification-template';
 import { emailQueue } from '@services/queues/email.queue';
+import { MessageCache } from '@services/redis/message.chache';
 
 const userCache: UserCache = new UserCache();
+const messageCache: MessageCache = new MessageCache();
 
 export class Add {
   @joiValidation(addChatSchema)
@@ -79,8 +81,8 @@ export class Add {
       });
     }
 
-    // 1 - add sender to chat list in cache
-    // 2 - add receiver to chat list in cache
+    await messageCache.addChatListToCache(`${req.currentUser!.userId}`, `${receiverId}`, `${conversationObjectId}`);
+    await messageCache.addChatListToCache(`${receiverId}`, `${req.currentUser!.userId}`, `${conversationObjectId}`);
     // 3 - add message data to cache
     // 4 - add message to chat queue
 
