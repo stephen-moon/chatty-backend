@@ -4,6 +4,7 @@ import { AuthPayload } from '@auth/interfaces/auth.interface';
 import { existingUserTwo } from '@root/mocks/user.mock';
 import mongoose from 'mongoose';
 import { IFollowData } from '@follows/interfaces/follow.interface';
+import { config } from '@root/config';
 
 export const followMockRequest = (sessionData: IJWT, currentUser?: AuthPayload | null, params?: IParams) => ({
   session: sessionData,
@@ -43,7 +44,7 @@ export const followData = {
     avatarColor: '#ff9800',
     followersCount: 3,
     followingCount: 5,
-    profilePicture: 'https://res.cloudinary.com/ratingapp/image/upload/605727cd646eb50e668a4e13'
+    profilePicture: `${config.CLOUD_HOST}/${config.CLOUD_NAME}/image/upload/605727cd646eb50e668a4e13`
   },
   followeeId: {
     username: 'Danny',
@@ -51,6 +52,6 @@ export const followData = {
     avatarColor: '#ff9800',
     followersCount: 3,
     followingCount: 5,
-    profilePicture: 'https://res.cloudinary.com/ratingapp/image/upload/605727cd646eb50e668a4e13'
+    profilePicture: `${config.CLOUD_HOST}/${config.CLOUD_NAME}/image/upload/605727cd646eb50e668a4e13`
   }
 };

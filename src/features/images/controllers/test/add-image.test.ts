@@ -10,6 +10,7 @@ import { UserCache } from '@services/redis/user.cache';
 import { existingUser } from '@root/mocks/user.mock';
 import { imageQueue } from '@services/queues/image.queue';
 import * as cloudinaryUploads from '@global/helpers/cloudinary-upload';
+import { config } from '@root/config';
 
 jest.useFakeTimers();
 jest.mock('@services/queues/base.queue');
@@ -54,7 +55,7 @@ describe('Add', () => {
       jest.spyOn(imageServer.socketIOImageObject, 'emit');
       jest.spyOn(cloudinaryUploads, 'uploads').mockImplementation((): any => Promise.resolve({ version: '1234', public_id: '123456' }));
 
-      const url = 'https://res.cloudinary.com/dahchezq8/image/upload/v1234/123456';
+      const url = `${config.CLOUD_HOST}/${config.CLOUD_NAME}/image/upload/v1234/123456`;
 
       await Add.prototype.profileImage(req, res);
       expect(UserCache.prototype.updateSingleUserItemInCache).toHaveBeenCalledWith(`${req.currentUser?.userId}`, 'profilePicture', url);
@@ -74,7 +75,7 @@ describe('Add', () => {
       await Add.prototype.profileImage(req, res);
       expect(imageQueue.addImageJob).toHaveBeenCalledWith('addUserProfileImageToDB', {
         key: `${req.currentUser?.userId}`,
-        value: 'https://res.cloudinary.com/dahchezq8/image/upload/v1234/123456',
+        value: `${config.CLOUD_HOST}/${config.CLOUD_NAME}/image/upload/v1234/123456`,
         imgId: '123456',
         imgVersion: '1234'
       });
@@ -102,7 +103,7 @@ describe('Add', () => {
     it('should not upload existing image', async () => {
       const req: Request = imagesMockRequest(
         {},
-        { image: 'https://res.cloudinary.com/dyamr9ym3/image/upload/v1234/123456' },
+        { image: `${config.CLOUD_HOST}/${config.CLOUD_NAME}/image/upload/v1234/123456` },
         authUserPayload
       ) as Request;
       const res: Response = imagesMockResponse();

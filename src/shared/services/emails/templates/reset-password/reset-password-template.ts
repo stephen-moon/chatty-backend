@@ -1,6 +1,7 @@
 import fs from 'fs';
 import ejs from 'ejs';
 import { IResetPasswordParams } from '@user/interfaces/user.interface';
+import { config } from '@root/config';
 
 class ResetPasswordTemplate {
   public passwordResetConfirmationTemplate(templateParams: IResetPasswordParams): string {
@@ -10,7 +11,7 @@ class ResetPasswordTemplate {
       email,
       ipaddress,
       date,
-      image_url: 'https://res.cloudinary.com/dahchezq8/image/upload/v1732829372/6748e0bc9a08e64969f7c56a'
+      image_url: `${config.CLOUD_HOST}/${config.CLOUD_NAME}/image/upload/v1732829372/6748e0bc9a08e64969f7c56a`
     });
   }
 }

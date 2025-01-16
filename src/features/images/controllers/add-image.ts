@@ -23,7 +23,7 @@ export class Add {
       throw new BadRequestError('File upload: Error occurred.  Try again');
     }
 
-    const url = `https://res.cloudinary.com/${config.CLOUD_NAME}/image/upload/v${result.version}/${result.public_id}`;
+    const url = `${config.CLOUD_HOST}/${config.CLOUD_NAME}/image/upload/v${result.version}/${result.public_id}`;
     const cachedUser: IUserDocument = (await userCache.updateSingleUserItemInCache(
       `${req.currentUser!.userId}`,
       'profilePicture',

@@ -20,6 +20,7 @@ import { SocketIOFollowHandler } from '@sockets/follow';
 import { SocketIOUserHandler } from '@sockets/user';
 import { SocketIONotificationHandler } from '@sockets/notification';
 import { SocketIOImageHandler } from '@sockets/image';
+import { SocketIOChatHandler } from '@sockets/chat';
 
 const SERVER_PORT = 8000;
 const log: Logger = config.createLogger('server');
@@ -123,12 +124,14 @@ export class ChattyServer {
     const postSocketHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
     const followerSocketHandler: SocketIOFollowHandler = new SocketIOFollowHandler(io);
     const userSocketHandler: SocketIOUserHandler = new SocketIOUserHandler(io);
+    const chatSocketHandler: SocketIOChatHandler = new SocketIOChatHandler(io);
     const notificationSocketHandler: SocketIONotificationHandler = new SocketIONotificationHandler();
     const imageSocketHandler: SocketIOImageHandler = new SocketIOImageHandler();
 
     postSocketHandler.listen();
     followerSocketHandler.listen();
     userSocketHandler.listen();
+    chatSocketHandler.listen();
     notificationSocketHandler.listen(io);
     imageSocketHandler.listen(io);
   }
