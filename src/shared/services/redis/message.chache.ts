@@ -14,7 +14,7 @@ export class MessageCache extends BaseCache {
 
   public async addChatListToCache(senderId: string, receiverId: string, conversationId: string): Promise<void> {
     try {
-      if (this.client.isOpen) {
+      if (!this.client.isOpen) {
         await this.client.connect();
       }
 
