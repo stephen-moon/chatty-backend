@@ -83,7 +83,7 @@ export class Add {
 
     await messageCache.addChatListToCache(`${req.currentUser!.userId}`, `${receiverId}`, `${conversationObjectId}`);
     await messageCache.addChatListToCache(`${receiverId}`, `${req.currentUser!.userId}`, `${conversationObjectId}`);
-    // 3 - add message data to cache
+    await messageCache.addChatMessageToCache(`${conversationObjectId}`, messageData);
     // 4 - add message to chat queue
 
     res.status(HTTP_STATUS.OK).json({ message: 'Message added', conversationId: conversationObjectId });
@@ -103,7 +103,7 @@ export class Add {
         header: `Message notification from ${currentUser.username}`
       };
       const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
-      emailQueue.addEmailJob('directMessageEmail', {
+      emailQueue.addEmailJob('directMessagesEmail', {
         receiverEmail: currentUser.email,
         template,
         subject: `You've received messages from ${currentUser.username}`

@@ -3,6 +3,7 @@ import Logger from 'bunyan';
 import { findIndex } from 'lodash';
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
+import { IMessageData } from '@chats/interfaces/chat.interface';
 
 const cacheName: string = 'messageCache';
 const log: Logger = config.createLogger(cacheName);
@@ -27,6 +28,19 @@ export class MessageCache extends BaseCache {
           await this.client.RPUSH(`chatList:${senderId}`, JSON.stringify({ receiverId, conversationId }));
         }
       }
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error.  Try again.');
+    }
+  }
+
+  public async addChatMessageToCache(conversationId: string, value: IMessageData): Promise<void> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+
+      await this.client.RPUSH(`messages:${conversationId}`, JSON.stringify(value));
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error.  Try again.');
