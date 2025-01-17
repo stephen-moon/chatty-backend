@@ -18,3 +18,25 @@ withCredentials: true
   "isRead": false,
   "selectedImage": ""
 }
+
+###
+POST {{baseUrl}}/{{urlPath}}/chat/message/add-chat-users
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "userOne": "678816acb9559ff2e621e98f",
+  "userTwo": "6789853d5216080dea094449"
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/chat/message/remove-chat-users
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "userOne": "678816acb9559ff2e621e98f",
+  "userTwo": "6789853d5216080dea094449"
+}
