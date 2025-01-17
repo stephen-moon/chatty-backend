@@ -16,6 +16,7 @@ import { INotificationTemplate } from '@notifications/interfaces/notification.in
 import { notificationTemplate } from '@services/emails/templates/notifications/notification-template';
 import { emailQueue } from '@services/queues/email.queue';
 import { MessageCache } from '@services/redis/message.chache';
+import { chatQueue } from '@services/queues/chat.queue';
 
 const userCache: UserCache = new UserCache();
 const messageCache: MessageCache = new MessageCache();
@@ -84,7 +85,7 @@ export class Add {
     await messageCache.addChatListToCache(`${req.currentUser!.userId}`, `${receiverId}`, `${conversationObjectId}`);
     await messageCache.addChatListToCache(`${receiverId}`, `${req.currentUser!.userId}`, `${conversationObjectId}`);
     await messageCache.addChatMessageToCache(`${conversationObjectId}`, messageData);
-    // 4 - add message to chat queue
+    chatQueue.addChatJob('addChatMessageToDB', messageData);
 
     res.status(HTTP_STATUS.OK).json({ message: 'Message added', conversationId: conversationObjectId });
   }

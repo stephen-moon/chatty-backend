@@ -8,8 +8,8 @@ Accept: application/json
 withCredentials: true
 
 {
-  "conversationId": "678a69179a76837fd0cb99e3",
-  "receiverId": "6789853d5216080dea094449",
+  "conversationId": "678a903a9910dad2485b45dd",
+  "receiverId": "678a8c47a3fec1f5ec01fe59",
   "receiverUsername": "Maria",
   "receiverAvatarColor": "pink",
   "receiverProfilePicture": "https://res.cloudinary.com/dahchezq8/image/upload/v1737065789/6789853d5216080dea094449",

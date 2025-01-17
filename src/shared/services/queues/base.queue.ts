@@ -12,6 +12,7 @@ import { ICommentJob } from '@comments/interfaces/comment.interface';
 import { IFollowJobData } from '@follows/interfaces/follow.interface';
 import { INotificationJobData } from '@notifications/interfaces/notification.interface';
 import { IFileImageJobData } from '@images/interfaces/image.interface';
+import { IChatJobData, IMessageData } from '@chats/interfaces/chat.interface';
 
 type IBaseJobData =
   | IAuthJob
@@ -21,7 +22,9 @@ type IBaseJobData =
   | ICommentJob
   | IFollowJobData
   | INotificationJobData
-  | IFileImageJobData;
+  | IFileImageJobData
+  | IChatJobData
+  | IMessageData;
 
 let bullAdapters: BullAdapter[] = [];
 export let serverAdapter: ExpressAdapter;
