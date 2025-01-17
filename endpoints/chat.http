@@ -13,7 +13,7 @@ withCredentials: true
   "receiverUsername": "Maria",
   "receiverAvatarColor": "pink",
   "receiverProfilePicture": "https://res.cloudinary.com/dahchezq8/image/upload/v1737065789/6789853d5216080dea094449",
-  "body": "I am well.",
+  "body": "How about you?",
   "gifUrl": "",
   "isRead": false,
   "selectedImage": ""
@@ -43,6 +43,12 @@ withCredentials: true
 
 ###
 GET {{baseUrl}}/{{urlPath}}/chat/message/conversation-list
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/chat/message/user/678a8c47a3fec1f5ec01fe59
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
