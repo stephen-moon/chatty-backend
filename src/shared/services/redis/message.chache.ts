@@ -100,7 +100,7 @@ export class MessageCache extends BaseCache {
         await this.client.connect();
       }
 
-      const userChatList: string[] = await this.client.LRANGE(`chatList: ${key}`, 0, -1);
+      const userChatList: string[] = await this.client.LRANGE(`chatList:${key}`, 0, -1);
       const conversationChatList: IMessageData[] = [];
       for (const item of userChatList) {
         const chatItem = Helpers.parseJson(item) as IChatList;
