@@ -38,7 +38,7 @@ export interface IMessageData {
   isRead: boolean;
   gifUrl: string;
   selectedImage: string;
-  reaction: IReaction[];
+  reactions: IReaction[];
   createdAt: Date | string;
   deleteForMe: boolean;
   deleteForEveryone: boolean;

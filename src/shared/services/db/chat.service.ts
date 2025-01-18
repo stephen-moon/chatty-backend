@@ -30,7 +30,7 @@ class ChatService {
       gifUrl: data.gifUrl,
       isRead: data.isRead,
       selectedImage: data.selectedImage,
-      reaction: data.reaction,
+      reactions: data.reactions,
       createdAt: data.createdAt
     });
   }

@@ -64,7 +64,7 @@ export class Add {
       isRead,
       gifUrl,
       selectedImage: fileUrl,
-      reaction: [],
+      reactions: [],
       createdAt: new Date(),
       deleteForEveryone: false,
       deleteForMe: false
