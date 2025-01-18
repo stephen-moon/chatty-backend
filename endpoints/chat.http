@@ -8,12 +8,12 @@ Accept: application/json
 withCredentials: true
 
 {
-  "conversationId": "678ba67bcd342bb4eb0a8568",
+  "conversationId": "678bb7551c5dc1ae14fc9f0d",
   "receiverId": "678a8c47a3fec1f5ec01fe59",
   "receiverUsername": "Maria",
   "receiverAvatarColor": "pink",
   "receiverProfilePicture": "https://res.cloudinary.com/dahchezq8/image/upload/v1737065789/6789853d5216080dea094449",
-  "body": "and you?",
+  "body": "How are you?",
   "gifUrl": "",
   "isRead": false,
   "selectedImage": ""
@@ -68,4 +68,17 @@ withCredentials: true
 {
   "senderId": "678a8c24a3fec1f5ec01fe52",
   "receiverId": "678a8c47a3fec1f5ec01fe59"
+}
+
+###
+PUT   {{baseUrl}}/{{urlPath}}/chat/message/reaction
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "conversationId": "678bb7551c5dc1ae14fc9f0d",
+  "messageId": "678bb7881c5dc1ae14fc9f17",
+  "reaction": "sad",
+  "type": "remove"
 }

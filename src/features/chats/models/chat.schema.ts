@@ -17,7 +17,7 @@ const messageSchema: Schema = new Schema({
   deleteForMe: { type: Boolean, default: false },
   deleteForEveryone: { type: Boolean, default: false },
   selectedImage: { type: String, default: '' },
-  reaction: Array,
+  reactions: Array,
   createdAt: { type: Date, default: Date.now }
 });
 

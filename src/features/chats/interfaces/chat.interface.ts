@@ -17,7 +17,7 @@ export interface IMessageDocument extends Document {
   gifUrl: string;
   isRead: boolean;
   selectedImage: string;
-  reaction: IReaction[];
+  reactions: IReaction[];
   createdAt: Date;
   deleteForMe: boolean;
   deleteForEveryone: boolean;

@@ -4,6 +4,7 @@ import { Add } from '@chats/controllers/add-chat-message';
 import { Get } from '@chats/controllers/get-chat-messages';
 import { Delete } from '@chats/controllers/delete-chat-message';
 import { Update } from '@chats/controllers/update-chat-message';
+import { Message } from '@chats/controllers/add-message-reaction';
 
 class ChatRoutes {
   private router: Router;
@@ -27,6 +28,7 @@ class ChatRoutes {
     );
 
     this.router.put('/chat/message/mark-as-read', authMiddleware.checkAuthentication, Update.prototype.markMessageAsRead);
+    this.router.put('/chat/message/reaction', authMiddleware.checkAuthentication, Message.prototype.reaction);
 
     return this.router;
   }

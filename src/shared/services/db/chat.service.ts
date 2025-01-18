@@ -99,6 +99,13 @@ class ChatService {
     };
     await MessageModel.updateMany(query, { $set: { isRead: true } }).exec();
   }
+
+  public async updagteMessageReaction(messageId: ObjectId, senderName: string, reaction: string, type: 'add' | 'remove'): Promise<void> {
+    await MessageModel.updateOne({ _id: messageId }, { $pull: { reactions: { senderName } } }).exec();
+    if (type === 'add') {
+      await MessageModel.updateOne({ _id: messageId }, { $push: { reactions: { senderName, type: reaction } } }).exec();
+    }
+  }
 }
 
 export const chatService: ChatService = new ChatService();
