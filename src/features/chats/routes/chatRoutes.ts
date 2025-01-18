@@ -3,6 +3,7 @@ import { authMiddleware } from '@global/helpers/auth-middleware';
 import { Add } from '@chats/controllers/add-chat-message';
 import { Get } from '@chats/controllers/get-chat-messages';
 import { Delete } from '@chats/controllers/delete-chat-message';
+import { Update } from '@chats/controllers/update-chat-message';
 
 class ChatRoutes {
   private router: Router;
@@ -24,6 +25,8 @@ class ChatRoutes {
       authMiddleware.checkAuthentication,
       Delete.prototype.markMessageAsDeleted
     );
+
+    this.router.put('/chat/message/mark-as-read', authMiddleware.checkAuthentication, Update.prototype.markMessageAsRead);
 
     return this.router;
   }

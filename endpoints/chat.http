@@ -8,12 +8,12 @@ Accept: application/json
 withCredentials: true
 
 {
-  "conversationId": "678a903a9910dad2485b45dd",
+  "conversationId": "678ba67bcd342bb4eb0a8568",
   "receiverId": "678a8c47a3fec1f5ec01fe59",
   "receiverUsername": "Maria",
   "receiverAvatarColor": "pink",
   "receiverProfilePicture": "https://res.cloudinary.com/dahchezq8/image/upload/v1737065789/6789853d5216080dea094449",
-  "body": "How about you?",
+  "body": "and you?",
   "gifUrl": "",
   "isRead": false,
   "selectedImage": ""
@@ -54,7 +54,18 @@ Accept: application/json
 withCredentials: true
 
 ###
-DELETE  {{baseUrl}}/{{urlPath}}/chat/message/mark-as-deleted/678a903a9910dad2485b45dc/678a8c24a3fec1f5ec01fe52/678a8c47a3fec1f5ec01fe59/deleteForEveryone
+DELETE  {{baseUrl}}/{{urlPath}}/chat/message/mark-as-deleted/678ba6c6cd342bb4eb0a8572/678a8c24a3fec1f5ec01fe52/678a8c47a3fec1f5ec01fe59/deleteForMe
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+PUT   {{baseUrl}}/{{urlPath}}/chat/message/mark-as-read
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "senderId": "678a8c24a3fec1f5ec01fe52",
+  "receiverId": "678a8c47a3fec1f5ec01fe59"
+}

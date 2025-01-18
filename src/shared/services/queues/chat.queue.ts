@@ -7,6 +7,7 @@ class ChatQueue extends BaseQueue {
     super('chats');
     this.processJob('addChatMessageToDB', 5, chatWorker.addChatMessageToDB);
     this.processJob('markMessageAsDeletedInDB', 5, chatWorker.markMessageAsDeleted);
+    this.processJob('markMessageAsReadInDB', 5, chatWorker.markMessageAsRead);
   }
 
   public addChatJob(name: string, data: IChatJobData | IMessageData): void {
