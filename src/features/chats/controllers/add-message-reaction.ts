@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import HTTP_STATUS from 'http-status-codes';
 import mongoose from 'mongoose';
-import { MessageCache } from '@services/redis/message.chache';
+import { MessageCache } from '@services/redis/message.cache';
 import { IMessageData } from '@chats/interfaces/chat.interface';
 import { socketIOChatObject } from '@sockets/chat';
 import { chatQueue } from '@services/queues/chat.queue';

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import HTTP_STATUS from 'http-status-codes';
 import mongoose from 'mongoose';
-import { MessageCache } from '@services/redis/message.chache';
+import { MessageCache } from '@services/redis/message.cache';
 import { IMessageData } from '@chats/interfaces/chat.interface';
 import { socketIOChatObject } from '@sockets/chat';
 import { chatQueue } from '@services/queues/chat.queue';
@@ -12,7 +12,7 @@ const messageCache: MessageCache = new MessageCache();
 
 export class Update {
   @joiValidation(markChatSchema)
-  public async markMessageAsRead(req: Request, res: Response): Promise<void> {
+  public async message(req: Request, res: Response): Promise<void> {
     const { senderId, receiverId } = req.body;
 
     const updatedMessage: IMessageData = await messageCache.updateChatMessages(`${senderId}`, `${receiverId}`);

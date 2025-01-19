@@ -95,7 +95,7 @@ export class MessageCache extends BaseCache {
     }
   }
 
-  public async getUserConvertionList(key: string): Promise<IMessageData[]> {
+  public async getUserConversationList(key: string): Promise<IMessageData[]> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();

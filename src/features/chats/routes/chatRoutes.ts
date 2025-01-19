@@ -27,7 +27,7 @@ class ChatRoutes {
       Delete.prototype.markMessageAsDeleted
     );
 
-    this.router.put('/chat/message/mark-as-read', authMiddleware.checkAuthentication, Update.prototype.markMessageAsRead);
+    this.router.put('/chat/message/mark-as-read', authMiddleware.checkAuthentication, Update.prototype.message);
     this.router.put('/chat/message/reaction', authMiddleware.checkAuthentication, Message.prototype.reaction);
 
     return this.router;

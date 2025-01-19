@@ -15,7 +15,7 @@ import { socketIOChatObject } from '@sockets/chat';
 import { INotificationTemplate } from '@notifications/interfaces/notification.interface';
 import { notificationTemplate } from '@services/emails/templates/notifications/notification-template';
 import { emailQueue } from '@services/queues/email.queue';
-import { MessageCache } from '@services/redis/message.chache';
+import { MessageCache } from '@services/redis/message.cache';
 import { chatQueue } from '@services/queues/chat.queue';
 
 const userCache: UserCache = new UserCache();
@@ -117,7 +117,7 @@ export class Add {
       };
       const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
       emailQueue.addEmailJob('directMessagesEmail', {
-        receiverEmail: currentUser.email,
+        receiverEmail: cachedUser.email!,
         template,
         subject: `You've received messages from ${currentUser.username}`
       });
