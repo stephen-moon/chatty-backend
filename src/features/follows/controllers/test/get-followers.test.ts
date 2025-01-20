@@ -25,10 +25,10 @@ describe('Get', () => {
     it('should send correct json response if user following exist in cache', async () => {
       const req: Request = followMockRequest({}, authUserPayload) as Request;
       const res: Response = followMockResponse();
-      jest.spyOn(FollowCache.prototype, 'getFollowFromCache').mockResolvedValue([mockFollowData]);
+      jest.spyOn(FollowCache.prototype, 'getFollowsFromCache').mockResolvedValue([mockFollowData]);
 
       await Get.prototype.userFollowing(req, res);
-      expect(FollowCache.prototype.getFollowFromCache).toHaveBeenCalledWith(`following:${req.currentUser?.userId}`);
+      expect(FollowCache.prototype.getFollowsFromCache).toHaveBeenCalledWith(`following:${req.currentUser?.userId}`);
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
         message: 'User following',
@@ -39,7 +39,7 @@ describe('Get', () => {
     it('should send correct json response if user following exist in database', async () => {
       const req: Request = followMockRequest({}, authUserPayload) as Request;
       const res: Response = followMockResponse();
-      jest.spyOn(FollowCache.prototype, 'getFollowFromCache').mockResolvedValue([]);
+      jest.spyOn(FollowCache.prototype, 'getFollowsFromCache').mockResolvedValue([]);
       jest.spyOn(followService, 'getFolloweeData').mockResolvedValue([mockFollowData]);
 
       await Get.prototype.userFollowing(req, res);
@@ -54,7 +54,7 @@ describe('Get', () => {
     it('should return empty following if user following does not exist', async () => {
       const req: Request = followMockRequest({}, authUserPayload) as Request;
       const res: Response = followMockResponse();
-      jest.spyOn(FollowCache.prototype, 'getFollowFromCache').mockResolvedValue([]);
+      jest.spyOn(FollowCache.prototype, 'getFollowsFromCache').mockResolvedValue([]);
       jest.spyOn(followService, 'getFolloweeData').mockResolvedValue([]);
 
       await Get.prototype.userFollowing(req, res);
@@ -70,10 +70,10 @@ describe('Get', () => {
     it('should send correct json response if user follower exist in cache', async () => {
       const req: Request = followMockRequest({}, authUserPayload, { userId: `${existingUserTwo._id}` }) as Request;
       const res: Response = followMockResponse();
-      jest.spyOn(FollowCache.prototype, 'getFollowFromCache').mockResolvedValue([mockFollowData]);
+      jest.spyOn(FollowCache.prototype, 'getFollowsFromCache').mockResolvedValue([mockFollowData]);
 
       await Get.prototype.userFollowers(req, res);
-      expect(FollowCache.prototype.getFollowFromCache).toHaveBeenCalledWith(`followers:${req.params.userId}`);
+      expect(FollowCache.prototype.getFollowsFromCache).toHaveBeenCalledWith(`followers:${req.params.userId}`);
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
         message: 'User followers',
@@ -84,7 +84,7 @@ describe('Get', () => {
     it('should send correct json response if user following exist in database', async () => {
       const req: Request = followMockRequest({}, authUserPayload, { userId: `${existingUserTwo._id}` }) as Request;
       const res: Response = followMockResponse();
-      jest.spyOn(FollowCache.prototype, 'getFollowFromCache').mockResolvedValue([]);
+      jest.spyOn(FollowCache.prototype, 'getFollowsFromCache').mockResolvedValue([]);
       jest.spyOn(followService, 'getFollowerData').mockResolvedValue([mockFollowData]);
 
       await Get.prototype.userFollowers(req, res);
@@ -99,7 +99,7 @@ describe('Get', () => {
     it('should return empty following if user following does not exist', async () => {
       const req: Request = followMockRequest({}, authUserPayload, { userId: `${existingUserTwo._id}` }) as Request;
       const res: Response = followMockResponse();
-      jest.spyOn(FollowCache.prototype, 'getFollowFromCache').mockResolvedValue([]);
+      jest.spyOn(FollowCache.prototype, 'getFollowsFromCache').mockResolvedValue([]);
       jest.spyOn(followService, 'getFollowerData').mockResolvedValue([]);
 
       await Get.prototype.userFollowers(req, res);

@@ -57,7 +57,7 @@ export class FollowCache extends BaseCache {
     }
   }
 
-  public async getFollowFromCache(key: string): Promise<IFollowData[]> {
+  public async getFollowsFromCache(key: string): Promise<IFollowData[]> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();
