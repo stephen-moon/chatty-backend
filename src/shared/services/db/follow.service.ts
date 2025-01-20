@@ -9,6 +9,7 @@ import { UserCache } from '@services/redis/user.cache';
 import { socketIONotificationObject } from '@sockets/notification';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { UserModel } from '@user/models/user.schema';
+import { map } from 'lodash';
 import { BulkWriteResult, ObjectId } from 'mongodb';
 import mongoose, { Query } from 'mongoose';
 
@@ -170,6 +171,20 @@ class FollowService {
     ]);
 
     return followers;
+  }
+
+  public async getFolloweeIds(userId: string): Promise<string[]> {
+    const followees = await FollowModel.aggregate([
+      { $match: { followerId: new mongoose.Types.ObjectId(userId) } },
+      {
+        $project: {
+          followeeId: 1,
+          _id: 0
+        }
+      }
+    ]);
+
+    return map(followees, (result) => result.followeeId.toString());
   }
 }
 
