@@ -41,7 +41,7 @@ export class UserCache extends BaseCache {
     } = createdUser;
     const dataToSave = {
       _id: `${_id}`,
-      uid: `${uId}`,
+      uId: `${uId}`,
       username: `${username}`,
       email: `${email}`,
       avatarColor: `${avatarColor}`,

@@ -6,3 +6,21 @@ GET {{baseUrl}}/{{urlPath}}/user/all/1
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/profile
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/profile/678a8c24a3fec1f5ec01fe52
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/profile/posts/678a8c24a3fec1f5ec01fe52
+Content-Type: application/json
+Accept: application/json
+withCredentials: true

@@ -8,6 +8,8 @@ import { userService } from '@services/db/user.service';
 import { IFollowData } from '@follows/interfaces/follow.interface';
 import { followService } from '@services/db/follow.service';
 import mongoose from 'mongoose';
+import { IPostDocument } from '@post/interfaces/post.interface';
+import { postService } from '@services/db/post.service';
 
 const PAGE_SIZE = 12;
 
@@ -52,6 +54,22 @@ export class Get {
     const existingUser: IUserDocument = cachedUser ? cachedUser : await userService.getUserById(userId);
 
     res.status(HTTP_STATUS.OK).json({ message: 'Get user profile by id', user: existingUser });
+  }
+
+  public async profileAndPosts(req: Request, res: Response): Promise<void> {
+    const { userId } = req.params;
+    const cachedUser: IUserDocument = (await userCache.getUserFromCache(userId)) as IUserDocument;
+    const cachedUserPosts: IPostDocument[] = await postCache.getUserPostsFromCache('post', parseInt(`${cachedUser.uId}`, 10));
+    const existingUser: IUserDocument = cachedUser ? cachedUser : await userService.getUserById(userId);
+
+    let userPosts: IPostDocument[];
+    if (cachedUserPosts.length) {
+      userPosts = cachedUserPosts;
+    } else {
+      userPosts = await postService.getPosts({ username: existingUser.username }, 0, 100, { createdAt: -1 });
+    }
+
+    res.status(HTTP_STATUS.OK).json({ message: 'Get user profile and posts', user: existingUser, posts: userPosts });
   }
 
   private async allUsers({ newSkip, limit, skip, userId }: IUserAll): Promise<IAllUsers> {
