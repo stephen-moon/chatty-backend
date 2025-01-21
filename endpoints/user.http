@@ -30,3 +30,9 @@ GET {{baseUrl}}/{{urlPath}}/user/suggestions
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/search/e
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
