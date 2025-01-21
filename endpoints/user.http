@@ -36,3 +36,15 @@ GET {{baseUrl}}/{{urlPath}}/user/search/e
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/change-password
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "currentPassword": "qwerty",
+  "newPassword": "qwerty2",
+  "confirmPassword": "qwerty2"
+}
