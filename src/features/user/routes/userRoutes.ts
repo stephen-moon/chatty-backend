@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import { authMiddleware } from '@global/helpers/auth-middleware';
-import { Get } from '@user/controllers/get-profile';
+import { Get } from '@user/controllers/get-user';
 import { Search } from '@user/controllers/search-user';
 import { Update } from '@user/controllers/update-user';
 
