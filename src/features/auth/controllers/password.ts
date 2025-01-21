@@ -7,7 +7,7 @@ import { authService } from '@services/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { IAuthDocument } from '@auth/interfaces/auth.interface';
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
-import { emailSchema, passwordSchema } from '@auth/schemes/password';
+import { changePasswordSchema, emailSchema, passwordSchema } from '@auth/schemes/password';
 import crypto from 'crypto';
 import { forgotPasswordTemplate } from '@services/emails/templates/forgot-password/forgot-password-template';
 import { emailQueue } from '@services/queues/email.queue';
@@ -16,7 +16,7 @@ import { resetPasswordTemplate } from '@services/emails/templates/reset-password
 
 export class Password {
   @joiValidation(emailSchema)
-  public async create(req: Request, res: Response): Promise<void> {
+  public async forgot(req: Request, res: Response): Promise<void> {
     const { email } = req.body;
     const existingUser: IAuthDocument = await authService.getAuthUserByEmail(email);
     if (!existingUser) {
@@ -34,7 +34,7 @@ export class Password {
   }
 
   @joiValidation(passwordSchema)
-  public async update(req: Request, res: Response): Promise<void> {
+  public async reset(req: Request, res: Response): Promise<void> {
     const { password, confirmPassword } = req.body;
     const { token } = req.params;
     if (password !== confirmPassword) {
@@ -59,6 +59,35 @@ export class Password {
 
     const template: string = resetPasswordTemplate.passwordResetConfirmationTemplate(templateParams);
     emailQueue.addEmailJob('forgotPasswordEmail', { template, receiverEmail: existingUser.email, subject: 'Password Reset Confirmation' });
-    res.status(HTTP_STATUS.OK).json({ message: 'Password has been updated successfully.' });
+    res.status(HTTP_STATUS.OK).json({ message: 'Password has been reset successfully.' });
+  }
+
+  @joiValidation(changePasswordSchema)
+  public async change(req: Request, res: Response): Promise<void> {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    if (newPassword !== confirmPassword) {
+      throw new BadRequestError('Passwords do not match');
+    }
+
+    const existingUser: IAuthDocument = await authService.getAuthUserByUsername(req.currentUser!.username);
+    const passwordMatch: boolean = await existingUser.comparePassword(currentPassword);
+    if (!passwordMatch) {
+      throw new BadRequestError('Invalid credentials');
+    }
+    const hashedPassword: string = await existingUser.hashPassword(newPassword);
+    await authService.updatePassword(`${req.currentUser!.username}`, hashedPassword);
+
+    const templateParams: IResetPasswordParams = {
+      username: existingUser.username!,
+      email: existingUser.email!,
+      ipaddress: publicIP.address(),
+      date: moment().format('DD//MM//YYYY HH:mm')
+    };
+    const template: string = resetPasswordTemplate.passwordResetConfirmationTemplate(templateParams);
+    emailQueue.addEmailJob('changePassword', { template, receiverEmail: existingUser.email!, subject: 'Password update confirmation' });
+
+    res.status(HTTP_STATUS.OK).json({
+      message: 'Password updated successfully. You will be redirected shortly to the login page.'
+    });
   }
 }

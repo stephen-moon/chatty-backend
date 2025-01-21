@@ -58,3 +58,15 @@ withCredentials: true
   "password": "qwerty1",
   "confirmPassword": "qwerty1"
 }
+
+###
+PUT {{baseUrl}}/{{urlPath}}/change-password
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "currentPassword": "qwerty",
+  "newPassword": "qwerty2",
+  "confirmPassword": "qwerty2"
+}

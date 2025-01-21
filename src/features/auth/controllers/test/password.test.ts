@@ -25,11 +25,11 @@ describe('Password', () => {
     jest.clearAllMocks();
   });
 
-  describe('create', () => {
+  describe('forgot', () => {
     it('should throw an error if email is invalid', () => {
       const req: Request = authMockRequest({}, { email: INVALID_EMAIL }) as Request;
       const res: Response = authMockResponse();
-      Password.prototype.create(req, res).catch((error: CustomError) => {
+      Password.prototype.forgot(req, res).catch((error: CustomError) => {
         expect(error.statusCode).toEqual(400);
         expect(error.serializeErrors().message).toEqual('Field must be valid');
       });
@@ -39,7 +39,7 @@ describe('Password', () => {
       const req: Request = authMockRequest({}, { email: WRONG_EMAIL }) as Request;
       const res: Response = authMockResponse();
       jest.spyOn(authService, 'getAuthUserByEmail').mockResolvedValue(null as any);
-      Password.prototype.create(req, res).catch((error: CustomError) => {
+      Password.prototype.forgot(req, res).catch((error: CustomError) => {
         expect(error.statusCode).toEqual(400);
         expect(error.serializeErrors().message).toEqual('Invalid credentials');
       });
@@ -50,7 +50,7 @@ describe('Password', () => {
       const res: Response = authMockResponse();
       jest.spyOn(authService, 'getAuthUserByEmail').mockResolvedValue(authMock);
       jest.spyOn(emailQueue, 'addEmailJob');
-      await Password.prototype.create(req, res);
+      await Password.prototype.forgot(req, res);
       expect(emailQueue.addEmailJob).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
@@ -59,11 +59,11 @@ describe('Password', () => {
     });
   });
 
-  describe('update', () => {
+  describe('reset', () => {
     it('should throw an error if password is empty', () => {
       const req: Request = authMockRequest({}, { password: '' }) as Request;
       const res: Response = authMockResponse();
-      Password.prototype.update(req, res).catch((error: CustomError) => {
+      Password.prototype.reset(req, res).catch((error: CustomError) => {
         expect(error.statusCode).toEqual(400);
         expect(error.serializeErrors().message).toEqual('Password is a required field');
       });
@@ -72,7 +72,7 @@ describe('Password', () => {
     it('should throw an error if password and confirmPassword are different', () => {
       const req: Request = authMockRequest({}, { password: CORRECT_PASSWORD, confirmPassword: `${CORRECT_PASSWORD}2` }) as Request;
       const res: Response = authMockResponse();
-      Password.prototype.update(req, res).catch((error: CustomError) => {
+      Password.prototype.reset(req, res).catch((error: CustomError) => {
         expect(error.statusCode).toEqual(400);
         expect(error.serializeErrors().message).toEqual('Passwords should match');
       });
@@ -84,7 +84,7 @@ describe('Password', () => {
       }) as Request;
       const res: Response = authMockResponse();
       jest.spyOn(authService, 'getAuthUserByPasswordToken').mockResolvedValue(null as any);
-      Password.prototype.update(req, res).catch((error: CustomError) => {
+      Password.prototype.reset(req, res).catch((error: CustomError) => {
         expect(error.statusCode).toEqual(400);
         expect(error.serializeErrors().message).toEqual('Reset token has expired.');
       });
@@ -97,11 +97,11 @@ describe('Password', () => {
       const res: Response = authMockResponse();
       jest.spyOn(authService, 'getAuthUserByPasswordToken').mockResolvedValue(authMock);
       jest.spyOn(emailQueue, 'addEmailJob');
-      await Password.prototype.update(req, res);
+      await Password.prototype.reset(req, res);
       expect(emailQueue.addEmailJob).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
-        message: 'Password has been updated successfully.'
+        message: 'Password has been reset successfully.'
       });
     });
   });

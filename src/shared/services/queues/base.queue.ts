@@ -1,3 +1,4 @@
+import { IUserJob } from '@user/interfaces/user.interface';
 import Queue, { Job } from 'bull';
 import Logger from 'bunyan';
 import { createBullBoard } from '@bull-board/api';
@@ -24,7 +25,8 @@ type IBaseJobData =
   | INotificationJobData
   | IFileImageJobData
   | IChatJobData
-  | IMessageData;
+  | IMessageData
+  | IUserJob;
 
 let bullAdapters: BullAdapter[] = [];
 export let serverAdapter: ExpressAdapter;

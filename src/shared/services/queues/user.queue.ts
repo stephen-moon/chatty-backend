@@ -1,14 +1,16 @@
 import { BaseQueue } from '@services/queues/base.queue';
+import { IUserJob } from '@user/interfaces/user.interface';
 import { userWorker } from '@workers/user.worker';
 
 class UserQueue extends BaseQueue {
   constructor() {
     super('user');
     this.processJob('addUserToDB', 5, userWorker.addUserToDB);
+    this.processJob('updateBasicInfoInDB', 5, userWorker.updateUserInfo);
+    this.processJob('updateSocialLinksInDB', 5, userWorker.updateSocialLinks);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public addUserJob(name: string, data: any): void {
+  public addUserJob(name: string, data: IUserJob): void {
     this.addJob(name, data);
   }
 }

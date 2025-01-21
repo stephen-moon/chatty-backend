@@ -37,6 +37,10 @@ class AuthService {
     }).exec()) as IAuthDocument;
     return user;
   }
+
+  public async updatePassword(username: string, hashedPassword: string): Promise<void> {
+    await AuthModel.updateOne({ username }, { $set: { password: hashedPassword } }).exec();
+  }
 }
 
 export const authService: AuthService = new AuthService();
