@@ -21,6 +21,7 @@ class UserRoutes {
 
     this.router.put('/user/basic-info', authMiddleware.checkAuthentication, Update.prototype.info);
     this.router.put('/user/social-links', authMiddleware.checkAuthentication, Update.prototype.social);
+    this.router.put('/user/notification-settings', authMiddleware.checkAuthentication, Update.prototype.notificationSettings);
 
     return this.router;
   }

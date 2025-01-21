@@ -36,3 +36,42 @@ GET {{baseUrl}}/{{urlPath}}/user/search/e
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/basic-info
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "quote": "Tomorrow is a mystery.  Today is a gift.  That's why we call it The Present.",
+  "work": "",
+  "school": "Seoul National University",
+  "location": "Burlington, ON, Canada"
+ }
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/social-links
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "instagram": "https://www.instagram.com/stephen.moon.programmer/",
+  "twitter": "",
+  "facebook": "https://www.facebook.com/stephen.moon.programmer",
+  "youtube": "https://www.youtube.com/@stephendmoon"
+ }
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/notification-settings
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "messages": false,
+  "reactions": true,
+  "comments": false,
+  "follows": true
+ }

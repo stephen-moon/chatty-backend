@@ -1,4 +1,4 @@
-import { IBasicInfo, ISearchUser, ISocialLinks, IUserDocument } from '@user/interfaces/user.interface';
+import { IBasicInfo, INotificationSettings, ISearchUser, ISocialLinks, IUserDocument } from '@user/interfaces/user.interface';
 import { UserModel } from '@user/models/user.schema';
 import mongoose from 'mongoose';
 import { followService } from './follow.service';
@@ -31,6 +31,10 @@ class UserService {
         $set: { social: links }
       }
     ).exec();
+  }
+
+  public async updateNotificationSettings(userId: string, settings: INotificationSettings): Promise<void> {
+    await UserModel.updateOne({ _id: userId }, { $set: { notifications: settings } }).exec();
   }
 
   public async getUserById(userId: string): Promise<IUserDocument> {
