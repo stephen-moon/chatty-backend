@@ -59,7 +59,9 @@ export class Get {
   public async profileAndPosts(req: Request, res: Response): Promise<void> {
     const { userId } = req.params;
     const cachedUser: IUserDocument = (await userCache.getUserFromCache(userId)) as IUserDocument;
-    const cachedUserPosts: IPostDocument[] = await postCache.getUserPostsFromCache('post', parseInt(`${cachedUser.uId}`, 10));
+    const cachedUserPosts: IPostDocument[] = cachedUser
+      ? await postCache.getUserPostsFromCache('post', parseInt(`${cachedUser.uId}`, 10))
+      : [];
     const existingUser: IUserDocument = cachedUser ? cachedUser : await userService.getUserById(userId);
 
     let userPosts: IPostDocument[];
