@@ -11,12 +11,18 @@ import { notificationRoutes } from '@notifications/routes/notificationRoutes';
 import { imageRoutes } from '@images/routes/imageRoutes';
 import { chatRoutes } from '@chats/routes/chatRoutes';
 import { userRoutes } from '@user/routes/userRoutes';
+import { healthRoutes } from '@user/routes/healthRoutes';
 
 const BASE_PATH = '/api/v1';
 
 export default (app: Application) => {
   const routes = () => {
     app.use('/queues', serverAdapter.getRouter());
+    app.use('', healthRoutes.health());
+    app.use('', healthRoutes.env());
+    app.use('', healthRoutes.instance());
+    app.use('', healthRoutes.fiboRoutes());
+
     app.use(BASE_PATH, authRoutes.routes());
     app.use(BASE_PATH, authRoutes.signoutRoute());
 
